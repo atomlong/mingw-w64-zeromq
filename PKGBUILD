@@ -21,6 +21,8 @@ prepare () {
 
 build() {
   cd "${srcdir}/zeromq-${pkgver}"
+  # link ssp (needed because mingw env's -fstack-protection)
+  export LDFLAGS="${LDFLAGS} -lssp"
   for _arch in ${_architectures}; do
     mkdir -p build-${_arch} && pushd build-${_arch}
     ${_arch}-configure --disable-static
